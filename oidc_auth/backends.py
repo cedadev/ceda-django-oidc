@@ -6,10 +6,11 @@ __copyright__ = "Copyright 2020 United Kingdom Research and Innovation"
 __license__ = "BSD - see LICENSE file in top-level package directory"
 
 
-from mozilla_django_oidc.auth import OIDCAuthenticationBackend
+from mozilla_django_oidc.auth import OIDCAuthenticationBackend \
+    as BaseOIDCAuthenticationBackend
 
 
-class DjangoAuthenticationBackend(OIDCAuthenticationBackend):
+class OIDCAuthenticationBackend(BaseOIDCAuthenticationBackend):
 
     def get_username(self, claims):
 
