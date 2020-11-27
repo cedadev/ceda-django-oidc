@@ -7,13 +7,12 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 
 
 from django.urls import include, path
-from mozilla_django_oidc.urls import OIDCAuthenticateClass
 
 from . import views
 
 
 urlpatterns = [
-    path("login/", OIDCAuthenticateClass.as_view(), name="login"),
+    path("login/", views.OIDCLoginView.as_view(), name="login"),
     path("logout/", views.OIDCLogoutView.as_view(), name="logout"),
     path("oidc/", include("mozilla_django_oidc.urls")),
 ]

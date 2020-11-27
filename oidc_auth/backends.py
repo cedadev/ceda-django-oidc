@@ -9,8 +9,14 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 from mozilla_django_oidc.auth import OIDCAuthenticationBackend \
     as BaseOIDCAuthenticationBackend
 
+from .utils import import_from_settings
+
 
 class OIDCAuthenticationBackend(BaseOIDCAuthenticationBackend):
+
+    @staticmethod
+    def get_settings(attr, *args):
+        return import_from_settings(attr, *args)
 
     def get_username(self, claims):
 
