@@ -14,9 +14,9 @@ with open("README.md") as readme_file:
 
 
 setup(
-    name="ceda-django-oidc",
+    name="django-oidc-extras",
     version="0.1",
-    description="OpenID Connect authentication backend for Django applications.",
+    description="Extra utilities for Django apps using mozilla-django-oidc.",
     long_description = long_description,
     long_description_content_type = "text/markdown",
     url="https://github.com/cedadev/django-oidc-backend",

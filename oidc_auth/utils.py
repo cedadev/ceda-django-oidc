@@ -13,6 +13,7 @@ from mozilla_django_oidc.utils import import_from_settings \
     as _import_from_settings
 
 
+# Map of mozilla-django-oidc settings to OIDC metadata endpoint keys
 _SERVER_ENDPOINT_MAP = {
     "OIDC_OP_JWKS_ENDPOINT": "jwks_uri",
     "OIDC_OP_AUTHORIZATION_ENDPOINT": "authorization_endpoint",
@@ -23,16 +24,32 @@ _SERVER_ENDPOINT_MAP = {
 
 
 def _fetch_server_metadata(endpoint):
+    """ Unused function to fetch metadata from an OIDC server's well-known
+    endpoint.
+    """
 
     data = requests.get(endpoint)
     return data.json()
 
-_server_metadata = _fetch_server_metadata(settings.OIDC_METADATA_ENDPOINT)
-
 
 def import_from_settings(attr, *args):
+    """ Unused function to map mozilla-django-oidc settings to pre-fetched
+    OIDC server metadata.
+    """
 
+    # This should be cached
+    metadata = _fetch_server_metadata(settings.OIDC_METADATA_ENDPOINT)
     if attr in _SERVER_ENDPOINT_MAP:
-        return _server_metadata[_SERVER_ENDPOINT_MAP[attr]]
+        return metadata[_SERVER_ENDPOINT_MAP[attr]]
 
     return _import_from_settings(attr, *args)
+
+
+def generate_logout_url(request):
+    """ Builds a logout URL with redirect URI.
+    Requires setting the OIDC_OP_LOGOUT_ENDPOINT
+    """
+
+    logout_endpoint = settings.OIDC_OP_LOGOUT_ENDPOINT
+    redirect_uri = request.build_absolute_uri("/")
+    return f"{logout_endpoint}?redirect_uri={redirect_uri}"

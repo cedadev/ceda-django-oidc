@@ -1,3 +1,3 @@
-# Django OIDC Backend
+# Django OIDC Extras
 
-OpenID Connect authentication backend for Django applications.
+Extra utilities for Django apps using mozilla-django-oidc
