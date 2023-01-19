@@ -45,12 +45,33 @@ def import_from_settings(attr, *args):
     return _import_from_settings(attr, *args)
 
 
+def build_redirect_url(request):
+
+    redirect_url = getattr(settings, "LOGOUT_REDIRECT_URL", None)
+    if not redirect_url:
+        redirect_url = request.GET.get("next", "/")
+    return request.build_absolute_uri(redirect_url)
+
+
 def generate_logout_url(request):
     """ Builds a logout URL with redirect URI.
     Requires setting the OIDC_OP_LOGOUT_ENDPOINT
     """
 
-    logout_endpoint = settings.OIDC_OP_LOGOUT_ENDPOINT
-    redirect_path = getattr(settings, "LOGOUT_REDIRECT_URL", "/")
-    redirect_uri = request.build_absolute_uri(redirect_path)
-    return f"{logout_endpoint}?redirect_uri={redirect_uri}"
+    logout_endpoint = getattr(settings, "OIDC_OP_LOGOUT_ENDPOINT", "")
+
+    return f"{logout_endpoint}?redirect_uri={build_redirect_url(request)}"
+
+
+def generate_id_token_logout_url(request):
+    """ Builds a logout URL with redirect URI.
+    Requires setting the OIDC_OP_LOGOUT_ENDPOINT
+    """
+
+    logout_endpoint = getattr(settings, "OIDC_OP_LOGOUT_ENDPOINT", "")
+    oidc_id_token = request.session["oidc_id_token"]
+
+    return (f"{logout_endpoint}"
+        f"?post_logout_redirect_uri={build_redirect_url(request)}"
+        f"&id_token_hint={oidc_id_token}"
+    )
