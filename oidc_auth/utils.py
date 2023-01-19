@@ -51,5 +51,6 @@ def generate_logout_url(request):
     """
 
     logout_endpoint = settings.OIDC_OP_LOGOUT_ENDPOINT
-    redirect_uri = request.build_absolute_uri("/")
+    redirect_path = getattr(settings, "LOGOUT_REDIRECT_URL", "/")
+    redirect_uri = request.build_absolute_uri(redirect_path)
     return f"{logout_endpoint}?redirect_uri={redirect_uri}"
