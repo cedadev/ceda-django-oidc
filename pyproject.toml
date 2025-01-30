@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-oidc-extras"
+version = "1.0.0"
+authors = [{name = "William Tucker", email = "william.tucker@stfc.ac.uk"}]
+maintainers = [{name = "William Tucker", email = "william.tucker@stfc.ac.uk"}]
+license = {text = "BSD - See oidc_auth/LICENSE file for details"}
+description = "Extra utilities for Django apps using mozilla-django-oidc."
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: BSD License",
+    "Natural Language :: English",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+]
+
+dependencies = [
+    "mozilla-django-oidc",
+]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+Homepage = "https://github.com/cedadev/django-oidc-extras"
+
+[tool.black]
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.main]
+load-plugins = "pylint_django"
+
+[tool.setuptools]
+zip-safe = false
+include-package-data = false
+
+[tool.setuptools.packages]
+find = {namespaces = false}
+
+[tool.setuptools.package-data]
+app = ["LICENSE"]
