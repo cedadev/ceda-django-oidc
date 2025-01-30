@@ -71,7 +71,8 @@ def generate_id_token_logout_url(request):
     logout_endpoint = getattr(settings, "OIDC_OP_LOGOUT_ENDPOINT", "")
     oidc_id_token = request.session["oidc_id_token"]
 
-    return (f"{logout_endpoint}"
+    url = (f"{logout_endpoint}"
         f"?post_logout_redirect_uri={_build_redirect_url(request)}"
         f"&id_token_hint={oidc_id_token}"
     )
+    return url
